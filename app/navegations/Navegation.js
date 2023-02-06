@@ -1,13 +1,16 @@
 import React, { useState,useRef, useEffect, useMemo } from "react";
 import {NavigationContainer} from "@react-navigation/native";
+import LoginForm from "./LoginForm";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { AuthContext } from "../components/Context"
+
+/*
 import ProductosStack from "../navegations/ProductosStack";
 import PerfilStack from "../navegations/PerfilStack";
 import { Icon } from "react-native-elements";
-import LoginForm from "./LoginForm";
-import { AuthContext } from "../components/Context"
 import Productos from "../screens/Productos";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+*/
 
 
 
@@ -66,8 +69,8 @@ export default function Navigation(props){
     
     return(
         <AuthContext.Provider value={authContext}>
-        <NavigationContainer> 
-            {(chargue == 0) ?  <LoginForm  toastRef={toastRef} />  : 
+        <NavigationContainer>
+            {(chargue == 0) ?  <LoginForm  toastRef={toastRef} />  :
             <Tab.Navigator
             initialRouteName="AprobarPedidos"
             tabBarOptions={{
@@ -78,13 +81,13 @@ export default function Navigation(props){
                 tabBarIcon: ({ color }) => screenOptions(route, color),
               })}
             >
-                <Tab.Screen 
-                    name="productos" 
+                <Tab.Screen
+                    name="productos"
                     component={ProductosStack}
                     options={{headerShown: false}}
                     />
-                    <Tab.Screen 
-                    name="perfil" 
+                    <Tab.Screen
+                    name="perfil"
                     component={PerfilStack}
                     options={{headerShown: false}}  />
             </Tab.Navigator>}
@@ -103,10 +106,38 @@ function screenOptions(route, color){
         case "perfil":
             iconName = "account-circle";
             break;
-        default: 
+        default:
             break;
     }
     return(
         <Icon type="material-community" name={iconName} size={22} color={color} />
     )
 }
+
+/*
+<AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+            {(chargue == 0) ?  <LoginForm  toastRef={toastRef} />  :
+            <Tab.Navigator
+            initialRouteName="AprobarPedidos"
+            tabBarOptions={{
+              inactiveTintColor: "#646464",
+              activeTintColor: "#00a680",
+            }}
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color }) => screenOptions(route, color),
+              })}
+            >
+                <Tab.Screen
+                    name="productos"
+                    component={ProductosStack}
+                    options={{headerShown: false}}
+                    />
+                    <Tab.Screen
+                    name="perfil"
+                    component={PerfilStack}
+                    options={{headerShown: false}}  />
+            </Tab.Navigator>}
+                </NavigationContainer>
+                </AuthContext.Provider>
+* */
